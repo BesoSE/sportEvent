@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{liga.naziv}}{% endblock %}
+
+{% block body %}
+<div class="container">
+
+{% for mes in app.flashes('success') %}
+        <div class="alert alert-success">
+        {{mes}}
+        </div>
+    {% endfor %}
+
+
+    <h3> {{liga.naziv}}  <a href="/sport/Liga/{{liga.id}}" class="btn btn-primary">Tabela<a> </h3>
+
+    {% for utakmica in utakmice %}
+        {% if utakmica.Liga.id == liga.id %}
+        <div class="row">
+    <div class="col-sm-3" style="border-bottom:1px solid black;">
+        {% if utakmica.Datum != NULL %}
+             Datum:
+             {{utakmica.Datum|date("d/m/Y") }}
+             <br>
+             {% endif %}
+             {% if utakmica.Mjesto != NULL %}
+             Mjesto odigravanja:
+             {{utakmica.Mjesto}}
+             {% endif %}
+
+
+            {% if utakmica.Domaci == true %}
+               
+            <h6><a href="/sport/detaljiutakmice/{{utakmica.id}}/{{utakmica.Domaci.id}}/{{utakmica.Gosti.id}}" > {{utakmica.Domaci.naziv}}  - {{utakmica.Gosti.naziv}} 
+             {% for stat in statistike %}
+              {% if stat.Utakmica.id == utakmica.id %} {{stat.BrojGolovaDomaci}} : {{stat.BrojGolovaDomaci}} {% endif %}
+              {% endfor %}
+            </a> </h6> 
+            
+           {% endif %}
+
+            {% if utakmica.IgracD == true  %}
+            
+           <h6><a href="/sport/detaljiutakmicePojedinacni/{{utakmica.id}}/{{utakmica.IgracD.id}}/{{utakmica.IgracG.id}}" >  {{utakmica.IgracD.ime}} {{utakmica.IgracD.prezime}} - {{utakmica.IgracG.ime}} {{utakmica.IgracD.prezime}} </a></h6> 
+           {% endif %}
+
+
+ {% if is_granted('ROLE_EDITOR') %}
+           <a href="/sport/urediutakmica/{{utakmica.id}}" class="btn btn-dark">Uredi utakmicu</a>
+           {% endif %}
+
+           
+               </div></div>
+        {% endif %}
+        
+    {% endfor %}
+
+</div>
+    {% endblock %}

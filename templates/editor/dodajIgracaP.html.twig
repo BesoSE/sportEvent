@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dodaj Igraca Pojedinacni Sport{% endblock %}
+
+{% block body %}
+}
+<div class="container">
+<a href="/sport/dodajNovogIgracaP/{{liga.id}}" class="btn btn-dark"> Dodaj novog Igraca</a>
+<br>
+<h3> Dodaj postojeceg Igraca </h3>
+      {% if igracLiga %}
+
+  {% for igrac in igracLiga %}
+   
+    {{igrac.ime}}
+    {% if is_granted('ROLE_EDITOR') %}
+    <a href="#" data-id="{{igrac.id}}" class="btn btn-dark add_igrac_liga"> Dodaj Igraca</a>
+    
+    <br>
+
+{% endif %}
+  
+    {% endfor %}
+        {% else %}
+
+    {% endif %}
+
+   
+</div>
+{% endblock %}

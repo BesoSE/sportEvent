@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{tim.naziv}}{% endblock %}
+
+{% block body %}
+  {% for mes in app.flashes('success') %}
+        <div class="alert alert-success poruka">
+        {{mes}}
+        </div>
+        
+   
+    {% endfor %}
+
+
+      {% if liga.sport.naziv == "Fudbal" %}
+          
+         
+  <style>
+body{
+    background-image: url('https://i.pinimg.com/originals/a9/88/a4/a988a47e605cacc02b0bb41c85270de3.jpg');
+     background-repeat: no-repeat; 
+     background-size: 100% 200%;
+}
+</style>
+
+ {% endif  %}
+     {% if liga.sport.naziv == "Košarka" %}
+          
+         
+  <style>
+body{
+    background-image: url('https://layout.eurosport.com/i/v8/match/backgrounds/large/background_v8_s8.jpg');
+     background-repeat: no-repeat; 
+     background-size: cover;
+}
+</style>
+{% endif  %}
+
+<div class="container bg-light d-flex justify-content-center" >
+  <div >
+  <table class="table">
+  <tbody>
+  <tr>
+  <td>  <h1>Naziv tima:</h1> </td>
+  <td> <h1>{{tim.naziv}} </h1> </td>
+  </tr>
+   <tr>
+     <td><h3>Odigrane utakmice: </h3></td>
+     <td>  <h3>{{tim.Odigraneutakmice}}</h3></td>
+     </tr>
+   <tr>
+     <td><h3>Broj pobjeda:</h3></td>
+        <td> <h3>{{tim.BrojPobjeda}}</h3></td>
+        </tr>
+   <tr>
+        <td>  <h3>Broj poraza:</h3></td>
+         <td> <h3>{{tim.BrojPoraza}}</h3></td>
+         </tr>
+   <tr>
+      <td> <h3>Remi:</h3></td>
+      <td> <h3> {{tim.BrojRemija}}</h3></td>
+      </tr>
+   <tr>
+      <td>  <h3>Bodovi:</h3></td>
+ <td> <h3>{{tim.Bodovi}}</h3></td>
+       
+     
+    
+  
+
+    
+    
+
+     </tr>
+     </tbody>
+  </table>
+{% if is_granted('ROLE_EDITOR') %}
+     <a href="/sport/tim/dodajNovogIgraca/{{tim.id}}/{{idl}}" class="btn btn-dark">Dodaj Igraca</a>
+     {% endif %}
+
+  <h2> Igraci:</h2>
+    {% for igrac in igraci %}
+    
+      <h4> <a href="/sport/tim/prikaziIgraca/{{igrac.id}}/{{tim.id}}/{{idl}}" class="text-dark" > {{igrac.ime}}   {{igrac.prezime}}</a> 
+        {% if is_granted('ROLE_EDITOR') %}
+     <a href="#" data-idi="{{igrac.id}}" data-idl="{{tim.id}}" id="obr" class="btn btn-danger obrisi_igraca_iz_tima">Obrisi Igraca</a>
+     {% endif %}
+      </h4>
+       {# <a href="/sport/tim/dodajNovogIgraca/{{tim.id}}" class="btn btn-dark">Uredi Igraca</a> #}
+    {% endfor %}
+ <a href="/sport/Liga/{{idl}}" class="btn btn-primary" >Nazad</a>
+</div></div>
+{% endblock %}
+{% block javascripts %}
+<script src={{asset("js/main.js")}}></script>
+{% endblock %}

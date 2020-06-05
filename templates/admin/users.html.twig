@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Users{% endblock %}
+
+{% block body %}
+    <div class="container">
+{% if users == true %}
+    <table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Users</th>
+        
+    </tr>
+ </thead>
+    <tbody> 	
+    {% for user in users %}
+    
+    <tr>
+    <td><h3>Username: {{ user.username }}</h1>
+ 
+    <p>Email:  {{user.email}}</p>
+        
+    </td>
+    <td>
+    {% if user.roles == ["ROLE_USER"] %}
+
+      {% if user.roles != ['ROLE_ADMIN'] %}
+    <a href="#" data-id="{{ user.id }}" class="btn btn-dark add_admin"> Add Admin</a>  
+    
+     {% endif %}
+           {% if user.roles != ['ROLE_EDITOR'] %}
+    <a href="#" data-id="{{ user.id }}" class="btn btn-dark add_editor"> Add Editor</a>  
+</a>    
+     {% endif %}
+       {% if user.roles != ['ROLE_DELEGAT'] %}
+    <a href="#" data-id="{{ user.id }}" class="btn btn-dark add_delegat"> Add Delegat</a>  
+
+     {% endif %}
+       {% if user.roles != ['ROLE_RADNIK'] %}
+    <a href="#" data-id="{{ user.id }}" class="btn btn-dark add_radnik"> Add Radnik</a>  
+
+     {% endif %}
+    {% else %}
+
+      {% if user.roles == ['ROLE_ADMIN'] %}
+    
+    <a href="#" class="btn btn-danger delete_admin" data-id="{{ user.id }}"> Delete Admin</a>    
+     {% endif %}
+           {% if user.roles == ['ROLE_EDITOR'] %}
+    
+    <a href="#" class="btn btn-danger delete_editor" data-id="{{ user.id }}"> Delete Editor</a>    
+     {% endif %}
+       {% if user.roles == ['ROLE_DELEGAT'] %}
+    
+    <a href="#" class="btn btn-danger delete_delegat" data-id="{{ user.id }}"> Delete Delegat</a>    
+     {% endif %}
+       {% if user.roles == ['ROLE_RADNIK'] %}
+    
+    <a href="#" class="btn btn-danger delete_radnik" data-id="{{ user.id }}"> Delete Radnik</a>    
+     {% endif %}
+
+
+     {% endif %}
+    </td>
+    </tr>
+
+    {% endfor %}
+    </tbody>
+    </table>
+
+{% else %}
+    <p> No Users </p>
+{% endif %}
+
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src={{asset('js/admin.js')}}></script>
+{% endblock %}

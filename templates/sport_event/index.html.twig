@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sport{% endblock %}
+        {% block stylesheets %}
+         
+  <style>
+body{
+    background-image: url('https://st2.depositphotos.com/1005563/5210/i/950/depositphotos_52108617-stock-photo-sports-balls-with-equipment.jpg');
+     background-repeat: no-repeat; 
+     background-size: cover;
+}
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+{% endblock %}
+{% block body %}
+<div class="container">
+{% if sports == true %}
+<table class="table " >
+    <thead>
+    <tr>
+        <th>Sport</th>
+        
+    </tr>
+{% for mes in app.flashes('success') %}
+        <div class="alert alert-success">
+        {{mes}}
+        </div>
+    {% endfor %}
+
+    </thead>
+    <tbody> 	
+    {% for sport in sports %}
+    
+    <tr>
+    <td class="bg-dark" style=" color:white;"><h1>{{ sport.naziv }}</h1>  </td>
+     {% if is_granted('ROLE_EDITOR') %}
+  <td class="bg-dark">  <a href="/sport/edit/{{sport.id}}" class="btn btn-primary"> Edit Sport</a>
+    
+    <a href="#" class="btn btn-danger delete_sport" data-id="{{ sport.id }}"> Delete Sport</a>
+    <a href="/sport/dodajLigu/{{sport.id}}" class="btn btn-primary"> Dodaj Ligu</a>
+    
+     {% endif %}
+    </td>
+  
+    </tr>
+    
+     
+     
+    {% for liga in lige %}
+    <tr  class="table table-striped">
+    {% if liga.sport.id == sport.id %}
+         <td class="bg-primary">
+       <h4  > <a href="/sport/Liga/{{liga.id}} " style=" color:white;">{{liga.naziv}} </a> </h4> </td>
+       {% if is_granted('ROLE_EDITOR') %}
+    <td class="bg-primary">   <a href="/sport/editLiga/{{liga.id}}" class="btn btn-dark"> Edit Liga</a>
+        <a href="#" class="btn btn-danger delete_liga" data-id="{{ liga.id }}"> Delete Liga</a>
+      
+     {% endif %}
+        </td>
+        {% endif %}
+        </tr>
+    {% endfor %}
+    
+    
+        
+ 
+
+    {% endfor %}
+    </tbody>
+    </table>
+{% else %}
+    <p> No Sport </p>
+{% endif %}
+    </div>
+{# <div class="container">
+{% if sports == true %}
+<table class="table " >
+    <thead>
+    <tr>
+        <th style="color:white;">Sport</th>
+        
+    </tr>
+{% for mes in app.flashes('success') %}
+        <div class="alert alert-success">
+        {{mes}}
+        </div>
+    {% endfor %}
+
+    </thead>
+    </table> 	
+    {% for sport in sports %}
+    
+   <div class="row  dropdown" >
+    <div class="bg-dark p-4 col "  style=" color:white;"><h1>{{ sport.naziv }}</h1>
+    </div>
+    <div class="col bg-dark text-center d-flex align-items-center ">
+     {% if is_granted('ROLE_EDITOR') %}
+    <a href="/sport/edit/{{sport.id}}" class="btn btn-primary center-block"> Edit Sport</a>
+    
+    <a href="#" class="btn btn-danger delete_sport" data-id="{{ sport.id }}"> Delete Sport</a>
+    <a href="/sport/dodajLigu/{{sport.id}}" class="btn btn-primary"> Dodaj Ligu</a>
+    
+     {% endif %}
+     </div>    </div>
+ 
+    
+     
+     <div class="row " >
+     
+    {% for liga in lige %}
+   
+    {% if liga.sport.id == sport.id %}
+     
+    <div class="bg-primary p-3 col "   > <h4  > <a href="/sport/Liga/{{liga.id}} " style=" color:white;">{{liga.naziv}} </a> </h4> </div>
+      
+      <div class="bg-primary col sub-nav text-center d-flex align-items-center" >
+       {% if is_granted('ROLE_EDITOR') %}
+      <a href="/sport/editLiga/{{liga.id}}" class="btn btn-dark"> Edit Liga</a>
+        <a href="#" class="btn btn-danger delete_liga" data-id="{{ liga.id }}"> Delete Liga</a>
+      
+     {% endif %}
+      </div>    </div>
+     
+        {% endif %}
+  
+    {% endfor %}
+    
+    
+        
+ 
+
+    {% endfor %}
+   </div>
+{% else %}
+    <p> No Sport </p>
+{% endif %}
+    </div> #}
+      
+{% endblock %}
+
+{% block javascripts %}
+<script src={{asset("js/editor.js")}}></script>
+
+{% endblock %}
+
+
+{# <div class="container">
+{% if sports == true %}
+<table class="table " >
+    <thead>
+    <tr>
+        <th>Sport</th>
+        
+    </tr>
+{% for mes in app.flashes('success') %}
+        <div class="alert alert-success">
+        {{mes}}
+        </div>
+    {% endfor %}
+
+    </thead>
+    <tbody> 	
+    {% for sport in sports %}
+    
+    <tr>
+    <td class="bg-dark" style=" color:white;"><h1>{{ sport.naziv }}</h1>
+     {% if is_granted('ROLE_EDITOR') %}
+    <a href="/sport/edit/{{sport.id}}" class="btn btn-primary"> Edit Sport</a>
+    
+    <a href="#" class="btn btn-danger delete_sport" data-id="{{ sport.id }}"> Delete Sport</a>
+    <a href="/sport/dodajLigu/{{sport.id}}" class="btn btn-primary"> Dodaj Ligu</a>
+    
+     {% endif %}
+    </td>
+  
+    </tr>
+    
+     
+     
+    {% for liga in lige %}
+    <tr  class="table table-striped">
+    {% if liga.sport.id == sport.id %}
+         <td class="bg-primary">
+       <h4  > <a href="/sport/Liga/{{liga.id}} " style=" color:white;">{{liga.naziv}} </a> </h4> 
+       {% if is_granted('ROLE_EDITOR') %}
+      <a href="/sport/editLiga/{{liga.id}}" class="btn btn-dark"> Edit Liga</a>
+        <a href="#" class="btn btn-danger delete_liga" data-id="{{ liga.id }}"> Delete Liga</a>
+      
+     {% endif %}
+        </td>
+        {% endif %}
+        </tr>
+    {% endfor %}
+    
+    
+        
+ 
+
+    {% endfor %}
+    </tbody>
+    </table>
+{% else %}
+    <p> No Sport </p>
+{% endif %}
+    </div> #}

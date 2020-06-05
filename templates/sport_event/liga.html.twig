@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{liga.naziv}}{% endblock %}
+
+{% block body %}
+  {% for mes in app.flashes('success') %}
+        <div class="alert alert-success poruka">
+        {{mes}}
+        </div>
+        
+   
+    {% endfor %}
+    {% if liga.sport.naziv == "Fudbal" %}
+          
+         
+  <style>
+body{
+    background-image: url('https://i.pinimg.com/originals/a9/88/a4/a988a47e605cacc02b0bb41c85270de3.jpg');
+     background-repeat: no-repeat; 
+     background-size: cover;
+}
+</style>
+
+ {% endif  %}
+     {% if liga.sport.naziv == "Košarka" %}
+          
+         
+  <style>
+body{
+    background-image: url('https://layout.eurosport.com/i/v8/match/backgrounds/large/background_v8_s8.jpg');
+     background-repeat: no-repeat; 
+     background-size: cover;
+}
+</style>
+
+ {% endif  %}
+     {% if liga.sport.naziv == "Tenis" %}
+          
+         
+  <style>
+body{
+    background-image: url('https://res.cloudinary.com/fleetnation/image/private/c_fit,w_1120/g_south,l_text:style_gothic2:%C2%A9%20SeventyFour,o_20,y_10/g_center,l_watermark4,o_25,y_50/v1519846383/zdjpbzimmnsz83kq1ab0.jpg');
+     background-repeat: no-repeat; 
+     background-size: cover;
+}
+</style>
+
+ {% endif  %}
+<div class="container  ">
+    <h3 class="text-light"> {{liga.naziv}} </h3>
+
+    
+     <a href="/sport/Liga/{{liga.id}}/prikazUtakmica" class="btn btn-primary">Utakmice<a>
+     <br><br>
+    {% if liga.sport.tip == true %}
+       <table class="table">
+       <thead class="thead-dark">
+  <tr>
+    <th scope="col">Naziv</th>
+    <th scope="col">Odigrane utakmice</th>
+    <th scope="col">Broj pobjeda</th>
+    <th scope="col">Broj poraza</th>
+    <th scope="col">Remi</th>
+     <th scope="col">Broj pogodaka</th>
+    <th scope="col">Bodovi</th>
+  </tr>
+ <tr>
+  {% endif  %}
+ {% if timLiga  %}
+  {% for tim in timLiga %}
+   
+
+    
+
+ <tr>
+ 
+    <td style=" border: 1px solid black; " ><b> <a href="/sport/tim/{{tim.id}}/{{liga.id}}" class="text-light" >  {{tim.naziv}} </a></b></td>
+   <td style=" border: 1px solid black;" class="text-light">{{tim.Odigraneutakmice}}</td>
+   <td style=" border: 1px solid black;" class="text-light">{{tim.BrojPobjeda}}</td>
+   <td style=" border: 1px solid black;" class="text-light"> {{tim.BrojPoraza}}</td>
+   <td style=" border: 1px solid black;" class="text-light">{{tim.BrojRemija}}</td>
+   <td style=" border: 1px solid black;" class="text-light">{{tim.BrojPogodaka}}</td>
+   <td style=" border: 1px solid black;" class="text-light">{{tim.Bodovi}}</td>
+   {% if is_granted('ROLE_EDITOR') %}
+    
+   <td> <a href="/sport/urediTim/{{tim.id}}/{{liga.id}}" class="btn btn-dark"> Uredi Tim</a></td>
+    <td><a href="#" data-idt="{{tim.id}}" data-idl="{{liga.id}}" class="btn btn-danger obrisi_tim"> Obrisi Tim</a></td>
+    <br>
+    </tr>
+
+{% endif %}
+  </tr>
+
+
+
+    {% endfor %}
+    </table>
+        {% else %}
+
+    {% endif %}
+
+{% if liga.sport.tip == false %}
+      {% if igracLiga  %}
+          <table  class="table">
+              <thead class="thead-dark">
+  <tr>
+    <th scope="col">Ime</th>
+ 
+
+    <th scope="col">Odigrane utakmice</th>
+
+    <th scope="col">Broj poraza</th>
+    <th scope="col">Broj pobjeda</th>
+   
+  </tr>
+{% endif %}
+  {% for igrac in igracLiga %}
+
+
+  
+  <tr>
+  
+    <td style=" border: 1px solid black;"><b><a style="color:black;" href="/sport/tim/prikaziIgracaP/{{igrac.id}}/{{liga.id}}" >{{igrac.ime}}</a> </b></td>
+
+
+   <td style=" border: 1px solid black;" style="color:black;"><b>{{igrac.BrojOdigranihUtakmica}}</b></td>
+   
+
+   
+   <td style=" border: 1px solid black;" style="color:black;"><b>{{igrac.BrojPoraza}}</b></td>
+ <td style=" border: 1px solid black;" style="color:black;"><b>{{igrac.BrojPobjeda}}</b></td>
+ 
+   {% if is_granted('ROLE_EDITOR') %}
+   <td> <a href="/sport/urediIgraca/{{igrac.id}}" class="btn btn-dark"> Uredi Igraca</a></td>
+    <td> <a href="#" data-idi="{{igrac.id}}" data-idl="{{liga.id}}"  class="btn btn-danger obrisi_igraca_iz_lige"> Obrisi Igraca iz Lige</a></td>
+        
+
+{% endif %}
+  </tr>
+   
+    
+
+  
+    {% endfor %}
+        {% else %}
+
+    {% endif %}
+
+
+    {% if is_granted('ROLE_EDITOR') %}
+    {% if liga.sport.tip == false %}
+       <a href="/sport/dodajIgracaP/{{liga.id}}" class="btn btn-dark"> Dodaj Igraca</a>
+    {% else %}
+         <a href="/sport/dodajTim/{{liga.id}}" class="btn btn-dark"> Dodaj Tim</a>
+       
+    {% endif %}
+    {% endif %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+<script src={{asset("js/editor.js")}}></script>
+{% endblock %}

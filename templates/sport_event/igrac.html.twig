@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{igrac.ime}}{% endblock %}
+
+{% block body %}
+
+  {% for mes in app.flashes('success') %}
+        <div class="alert alert-success poruka">
+        {{mes}}
+        </div>
+        
+   
+    {% endfor %}
+<div class="container">
+
+<table class="table">
+  <tbody>
+  <tr>
+    <td> <h1>Ime igraca:</h1></td>   <td> <h1>{{igrac.ime}} </h1></td>
+         </tr>
+   <tr>
+  <td>  <h1>Prezime igraca:</h1></td>  <td> <h1> {{igrac.prezime}} </h1></td>
+       </tr>
+   <tr>
+    <td>  <h4>Visina:</h4></td>   <td> <h4>{{igrac.visina}} cm</h4></td>
+         </tr>
+   <tr>
+     <td>   <h4>Godine:</h4></td>  <td> <h4> {{igrac.godine}} </h4></td>
+          </tr>
+   <tr>
+  <td>  <h4>Broj pogodaka:</h4> </td>  <td> <h4>{{igrac.brojPogodaka}}</h4></td>
+       </tr>
+   <tr>
+   <td>  <h4> Broj odigranih Utakmica:</h4></td>   <td> <h4>  {{igrac.BrojOdigranihUtakmica}}</h4></td>
+        </tr>
+   <tr>
+   <td>  <h4> Broj asistencija: </h4></td>  <td> <h4>{{igrac.BrojAsistencija}}</h4></td>
+        </tr>
+   <tr>
+    <td> <h4> Broj pobjeda:</h4></td>  <td> <h4> {{igrac.BrojPobjeda}}</h4></td>
+         </tr>
+   <tr>
+   <td>  <h4> Broj poraza:</h4></td>  <td> <h4> {{igrac.BrojPoraza}}</h4></td>
+        </tr>
+   <tr>
+   <td>  <h4> Broj remija:</h4></td>  <td> <h4> {{igrac.BrojRemija}}</h4></td>
+
+     </tr>
+     </tbody>
+  </table>
+    {% if is_granted('ROLE_EDITOR') %}
+ <a href="/sport/tim/urediIgraca/{{igrac.id}}/{{tim.id}}/{{idl}}" class="btn btn-dark">Uredi Igraca</a>
+
+ {% endif %}
+      <a href="/sport/tim/{{tim.id}}/{{idl}}" class="btn btn-primary">Nazad</a>
+</div>
+
+{% endblock %}

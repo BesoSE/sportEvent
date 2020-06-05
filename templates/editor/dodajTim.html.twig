@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dodaj Tim{% endblock %}
+
+{% block body %}
+}
+<div class="container">
+<a href="/sport/dodajNoviTim/{{liga.id}}" class="btn btn-dark"> Dodaj novi tim</a>
+<br>
+<h3> Dodaj postojeci tim </h3>
+      {% if timLiga  %}
+
+  {% for tim in timLiga %}
+   
+    {{tim.naziv}}
+    {% if is_granted('ROLE_EDITOR') %}
+    <a href="#" data-id="{{tim.id}}" class="btn btn-dark add_tim_liga"> Dodaj Tim</a>
+    
+    <br>
+
+{% endif %}
+  
+    {% endfor %}
+        {% else %}
+
+    {% endif %}
+
+   
+</div>
+{% endblock %}

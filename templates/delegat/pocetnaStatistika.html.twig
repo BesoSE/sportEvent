@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Unos Pocetne Statistike{% endblock %}
+
+{% block body %}
+  {% for mes in app.flashes('error') %}
+        <div class="alert alert-danger poruka">
+        {{mes}}
+        </div>
+        
+   
+    {% endfor %}
+<div class="container">
+{{form_start(form)}}
+    <h4> {{domaci.naziv}} </h4>
+    {% for igD in igraciD %}
+    <input type="checkbox" name="igracD" index="igracD" >
+    <label for="igracD">{{igD.ime}}</label>
+    <br>
+    {% endfor %}
+      <h4> {{gosti.naziv}} </h4>
+     {% for igG in igraciG %}
+    <input type="checkbox" name="igracG" id=="igracG">
+    <label for="igracG">{{igG.ime}}</label>
+    <br>
+    {% endfor %}
+
+{{form_end(form)}}
+</div>
+{% endblock %}

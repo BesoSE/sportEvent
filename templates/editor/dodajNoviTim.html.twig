@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dodaj Novi Tim{% endblock %}
+
+{% block body %}
+  {% for mes in app.flashes('error') %}
+        <div class="alert alert-danger poruka">
+        {{mes}}
+        </div>
+        
+   
+    {% endfor %}
+<div class="container">
+{{form(form)}}
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% block body %}
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">Sport Event</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample02">
+        <ul class="navbar-nav mr-auto">
+        
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+      
+          {% if is_granted('ROLE_ADMIN') %}
+  <li class="nav-item active">
+
+         <a class="nav-link" href="/admin/users">Users <span class="sr-only">(current)</span></a>
+          </li>
+          
+{% endif %} 
+
+       {% if is_granted('ROLE_EDITOR') %}
+  <li class="nav-item active">
+
+         <a class="nav-link" href="/sport/dodaj">Dodaj Sport <span class="sr-only">(current)</span></a>
+          </li>
+          
+{% endif %} 
+        </ul>
+        
+      {% if ( app.user == false)  %}
+
+          <li class="nav-item active">
+            <a class="btn btn-primary " href="/sport/login">LogIn </a>
+          </li>
+    
+        <li class="nav-item active">
+            <a class="btn btn-danger " href="/sport/register">Register </a>
+          </li>
+         {% endif %} 
+         
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  <li class="nav-item active">
+        <div class="mb-3" style="color:white">
+             {{ app.user.username }}
+        </div>
+          </li> 
+        <li class="nav-item active">
+        <a class="btn btn-danger " href="/logout">LogOut</a>
+          </li> 
+    {% endif %} 
+
+
+            
+      </div>
+    </nav>
+
+
+{% endblock %}
